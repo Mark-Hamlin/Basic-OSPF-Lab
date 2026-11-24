@@ -1,0 +1,59 @@
+! router2 - Packet Tracer Router-PT-Empty (labeled Router1 in the topology) - final running-config
+! Password hashes removed for publishing
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname router2
+!
+enable secret 5 <removed>
+!
+no ip cef
+no ipv6 cef
+!
+username admin secret 5 <removed>
+!
+ip ssh version 2
+ip domain-name marksnetwork.local
+!
+interface GigabitEthernet0/0
+ ip address 10.10.0.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet1/0
+ ip address 192.168.0.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet2/0
+ ip address 192.168.1.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+router ospf 10
+ log-adjacency-changes
+ network 10.10.0.0 0.0.0.255 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+ network 192.168.0.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+line con 0
+ logging synchronous
+ login local
+!
+line aux 0
+ logging synchronous
+ login local
+!
+line vty 0 4
+ logging synchronous
+ login local
+ transport input ssh
+!
+end
